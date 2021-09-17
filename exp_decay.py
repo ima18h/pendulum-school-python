@@ -9,12 +9,14 @@ class ExponentialDecay:
         if a < 0: 
             raise ValueError("The constant a cannot be negative")
 
-    def __call__(self, t, u):   # Definerer funksjonen f(t, u)
+    def __call__(self, t, u):   
+        """Definerer funksjonen f(t, u)"""
         du_dt = -self.a*u
         return du_dt            # Returnerer den deriverte du/dt = -a*u
 
 # Oppgave 1c)
-    def solve(self, u0, T, dt): # Beregner løsninger for 0 <= t <= T 
+    def solve(self, u0, T, dt): 
+        """ Beregner løsninger for 0 <= t <= T """
         solution = solve_ivp(
             ExponentialDecay(self.a), 
             [0, T], 
@@ -22,7 +24,6 @@ class ExponentialDecay:
             t_eval = np.linspace(0, T, T//dt)
         )
         return solution.t, solution.y[0]
-
 
 # Tester solve metoden
 a = 0.05
