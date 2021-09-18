@@ -5,25 +5,25 @@ import matplotlib.pyplot as plt
 
 class ExponentialDecay: 
     def __init__(self, a): 
+        """Tar inn en konstant a som kun kan være positiv."""
         self.a = a
         if a < 0: 
             raise ValueError("The constant a cannot be negative")
 
     def __call__(self, t, u):   
-        """Definerer funksjonen f(t, u)"""
+        """Definerer funksjonen f(t, u) og returnerer den deriverte."""
         du_dt = -self.a*u
-        return du_dt            # Returnerer den deriverte du/dt = -a*u
+        return du_dt            
 
 # Oppgave 1c)
-    def solve(self, u0, T, dt): 
-        """ Beregner løsninger for 0 <= t <= T """
+    def solve(self, u0, T, dt):
+        """ Beregner løsninger av ODE-systemet for 0 <= t <= T """
         solution = solve_ivp(
-            ExponentialDecay(self.a), 
-            [0, T], 
-            [u0], 
-            t_eval = np.linspace(0, T, T//dt)
+            ExponentialDecay(self.a), [0, T], [u0],
+            t_eval=np.linspace(0, T, T // dt)
         )
         return solution.t, solution.y[0]
+
 
 # Tester solve metoden
 a = 0.05
