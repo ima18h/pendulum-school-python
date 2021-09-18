@@ -17,6 +17,6 @@ class Pendulum:
         returnerer de deriverte (h.s. av ODE-systemene).
         """
         theta, omega = y
-        dtheta_dt = omega
-        domega_dt = -self.g/self.L*np.sin(theta)
-        return dtheta_dt, domega_dt
+        theta_deriv = omega
+        omega_deriv = -self.g/self.L*np.sin(theta)
+        return theta_deriv, omega_deriv
