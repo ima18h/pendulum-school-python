@@ -36,6 +36,14 @@ class Pendulum:
         else:
             raise AttributeError("not solved yet")
 
+    @property
+    def x(self):
+        return self.__L * np.sin(self.theta)
+
+    @property
+    def y(self):
+        return -self.__L * np.cos(self.theta)
+
     def __call__(self, t, y):
         """
         Tar inn parameterne t og y som brukes i to funksjoner og
@@ -43,7 +51,7 @@ class Pendulum:
         """
         theta, omega = y
         theta_deriv = omega
-        omega_deriv = -self.__g/self.__L*np.sin(theta)
+        omega_deriv = -self.__g / self.__L*np.sin(theta)
         return theta_deriv, omega_deriv
 
     # Oppgave 2c)
@@ -61,4 +69,4 @@ class Pendulum:
 # just for basic test, need better test case
 pend = Pendulum()
 pend.solve((0, 0), 1, 0.1)
-tt = pend.t
+print(pend.x)
