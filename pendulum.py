@@ -43,7 +43,7 @@ class Pendulum:
 
     @property
     def y(self):
-        return -self.__L * np.cos(self.theta)
+        return -(self.__L * np.cos(self.theta))
 
     @property
     def potential(self):
@@ -58,7 +58,8 @@ class Pendulum:
         return np.gradient(self.y)
 
     # TODO: det er noe som feiler formlene.
-    # kinetic er alt for lav, eller så er potential alt for høy. de andre tror jeg virker, men vi må se
+    # kinetic er alt for lav, eller så er potential alt for høy.
+    # virker som periodene stemmer, men størrelsen på kinetic og potential er rar.
     @property
     def kinetic(self):
         return (1/2) * self.__M * (self.vx**2 + self.vy**2)
@@ -94,7 +95,7 @@ plt.plot(pend.t, pend.theta)
 
 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
 ax1.plot(pend.t, pend.kinetic)
-ax2.plot(pend.t, pend.vy, 'tab:orange')
+ax2.plot(pend.t, pend.potential, 'tab:orange')
 ax3.plot(pend.t, pend.theta, 'tab:green')
 ax4.plot(pend.t, pend.y, 'tab:red')
 plt.show()
