@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
 
 # Oppgave 2a)
 class Pendulum: 
@@ -50,12 +51,14 @@ class Pendulum:
 
     @property
     def vx(self):
-        return np.gradient(self.x, self.t[1] - self.t[0])
+        return np.gradient(self.x)
 
     @property
     def vy(self):
-        return np.gradient(self.y, self.t[1] - self.t[0])
+        return np.gradient(self.y)
 
+    # TODO: det er noe som feiler formlene.
+    # kinetic er alt for lav, eller så er potential alt for høy. de andre tror jeg virker, men vi må se
     @property
     def kinetic(self):
         return (1/2) * self.__M * (self.vx**2 + self.vy**2)
@@ -83,6 +86,16 @@ class Pendulum:
 
 
 # just for basic test, need better test case
+# TODO: add titles and such to plots
 pend = Pendulum()
-pend.solve((1, 2), 1, 0.1)
-print(pend.kinetic)
+pend.solve((np.pi/2, 1), 4, 0.1)
+
+plt.plot(pend.t, pend.theta)
+
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+ax1.plot(pend.t, pend.kinetic)
+ax2.plot(pend.t, pend.vy, 'tab:orange')
+ax3.plot(pend.t, pend.theta, 'tab:green')
+ax4.plot(pend.t, pend.y, 'tab:red')
+plt.show()
+print(pend.potential+pend.kinetic)
