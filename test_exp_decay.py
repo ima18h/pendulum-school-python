@@ -20,6 +20,8 @@ def test_is_a_negative_raise_ValueError():
 
 
 # Oppgave 1d)
+# TODO: fix tests for 1d
+# keep it simple. check edge cases and get times from the solution. it returns time list
 @pytest.mark.parametrize(
     "a, u0, T", [(2, 3, 4), (0.2, 6, 10), (1, 5, 20)]
 )
