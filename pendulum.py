@@ -10,11 +10,9 @@ class Pendulum:
         Tar inn parameterne L, M og g. Om noe annet ikke er gitt så er 
         L = 1 m, M = 1 kg og g = 9.81 m/s^2 som standardverdi.
         """
-        self._t = None
-        self._theta, self._omega = None, None
-        self._L = L
-        self._M = M
-        self._g = g
+        self.L = L
+        self.M = M
+        self.g = g
         self._solved = False
 
     @property
@@ -22,33 +20,33 @@ class Pendulum:
         if self._solved:
             return self._t
         else:
-            raise AttributeError("not solved yet")
+            raise AssertionError("Not solved yet.")
 
     @property
     def theta(self):
         if self._solved:
             return self._theta
         else:
-            raise AttributeError("not solved yet")
+            raise AssertionError("Not solved yet.")
 
     @property
     def omega(self):
         if self._solved:
             return self._omega
         else:
-            raise AttributeError("not solved yet")
+            raise AssertionError("Not solved yet.")
 
     @property
     def x(self):
-        return self._L * np.sin(self.theta)
+        return self.L * np.sin(self.theta)
 
     @property
     def y(self):
-        return -(self._L * np.cos(self.theta))
+        return -(self.L * np.cos(self.theta))
 
     @property
     def potential(self):
-        return self._M * self._g * (self.y + self._L)
+        return self.M * self.g * (self.y + self.L)
 
     @property
     def vx(self):
@@ -58,12 +56,12 @@ class Pendulum:
     def vy(self):
         return np.gradient(self.y)
 
-    # TODO: det er noe som feiler formlene.
+    # TO DO: det er noe som feiler formlene.
     # kinetic er alt for lav, eller så er potential alt for høy.
     # virker som periodene stemmer, men størrelsen på kinetic og potential er rar.
     @property
     def kinetic(self):
-        return (1 / 2) * self._M * (self.vx ** 2 + self.vy ** 2)
+        return (1 / 2) * self.M * (self.vx ** 2 + self.vy ** 2)
 
     def __call__(self, t, y):
         """
@@ -72,7 +70,7 @@ class Pendulum:
         """
         theta, omega = y
         theta_deriv = omega
-        omega_deriv = -self._g / self._L * np.sin(theta)
+        omega_deriv = -self.g / self.L * np.sin(theta)
         return theta_deriv, omega_deriv
 
     # Oppgave 2c)
@@ -95,12 +93,12 @@ class DampenedPendulum(Pendulum):
     def __call__(self, t, y):
         theta, omega = y
         theta_deriv = omega
-        omega_deriv = ((-self._g / self._L) * np.sin(theta)) - (self._B / self._M) * omega
+        omega_deriv = ((-self.g / self.L) * np.sin(theta)) - (self._B / self.M) * omega
         return theta_deriv, omega_deriv
 
 
 # just for basic test, need better test case
-# TODO: add titles and such to plots
+# TO DO: add titles and such to plots
 pend = DampenedPendulum(0.5)
 pend.solve((np.pi / 2, 1), 4, 0.1)
 
