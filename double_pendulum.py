@@ -8,7 +8,7 @@ class DoublePendulum:
         self._L2 = L2
         self._g = g
         self._t = None
-        self._theta1, self._omega, self._theta2, self._omega2 = None, None, None, None
+        self._theta1, self._omega1, self._theta2, self._omega2 = None, None, None, None
 
     def __call__(self, t, y):
         theta1, omega1, theta2, omega2 = y
@@ -35,7 +35,7 @@ class DoublePendulum:
 
         sol = solve_ivp(self, (0, T), y0, max_step=dt)
         self._t = sol.t
-        self._theta1, self._omega, self._theta2, self._omega2 = sol.y[0], sol.y[1], sol.y[2], sol.y[3]
+        self._theta1, self._omega1, self._theta2, self._omega2 = sol.y[0], sol.y[1], sol.y[2], sol.y[3]
 
     @property
     def t(self):
@@ -64,3 +64,34 @@ class DoublePendulum:
     @property
     def y2(self):
         return self.y1 - self._L2 * np.cos(self.theta2)
+
+    @property
+    def potential(self):
+        # masses are 1
+        p1 = self._g * (self.y1 + self._L1)
+        p2 = self._g * (self.y2 + self._L2 + self._L1)
+        return p1 + p2
+
+    @property
+    def vx1(self):
+        return np.gradient(self.x1)
+
+    @property
+    def vy1(self):
+        return np.gradient(self.y1)
+
+    @property
+    def vx2(self):
+        return np.gradient(self.x2)
+
+    @property
+    def vy2(self):
+        return np.gradient(self.y2)
+
+    @property
+    def kinetic(self):
+        # masses are 1
+        k1 = 1/2 * (self.vx1**2 + self.vy1**2)
+        k2 = 1/2 * (self.vx2**2 + self.vy2**2)
+        return k1 + k2
+
