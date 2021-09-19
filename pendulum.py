@@ -15,6 +15,27 @@ class Pendulum:
         self.__g = g
         self.__solved = False
 
+    @property
+    def t(self):
+        if self.__solved:
+            return self.__t
+        else:
+            raise AttributeError("not solved yet")
+
+    @property
+    def theta(self):
+        if self.__solved:
+            return self._theta
+        else:
+            raise AttributeError("not solved yet")
+
+    @property
+    def omega(self):
+        if self.__solved:
+            return self._omega
+        else:
+            raise AttributeError("not solved yet")
+
     def __call__(self, t, y):
         """
         Tar inn parameterne t og y som brukes i to funksjoner og
@@ -40,3 +61,4 @@ class Pendulum:
 # just for basic test, need better test case
 pend = Pendulum()
 pend.solve((0, 0), 1, 0.1)
+tt = pend.t
