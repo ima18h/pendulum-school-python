@@ -13,6 +13,7 @@ class Pendulum:
         self.__L = L
         self.__M = M
         self.__g = g
+        self.__solved = False
 
     def __call__(self, t, y):
         """
@@ -33,6 +34,7 @@ class Pendulum:
         sol = solve_ivp(self, (0, T), y0, max_step=dt)
         self.__t = sol.t
         self._theta, self._omega = sol.y[0], sol.y[1]
+        self.__solved = True
 
 
 # just for basic test, need better test case
