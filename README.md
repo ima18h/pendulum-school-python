@@ -5,4 +5,4 @@ Project 1 for anece and imadha about Double Pendulum
 
 ## Authors 
 - Ane Ce Eksveen-Søbakken (anece@math.uio.no)
-- Imad (imadha@mail.uio.no)
+- Imad H. (imadha@mail.uio.no)
