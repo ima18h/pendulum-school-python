@@ -8,9 +8,10 @@ class Pendulum:
         Tar inn parameterne L, M og g. Om noe annet ikke er gitt så er 
         L = 1 m, M = 1 kg og g = 9.81 m/s^2 som standardverdi.
         """
-        self.L = L
-        self.M = M
-        self.g = g
+        self.__solution_t, self.__solution_y = None, None
+        self.__L = L
+        self.__M = M
+        self.__g = g
 
     def __call__(self, t, y):
         """
@@ -19,7 +20,7 @@ class Pendulum:
         """
         theta, omega = y
         theta_deriv = omega
-        omega_deriv = -self.g/self.L*np.sin(theta)
+        omega_deriv = -self.__g/self.__L*np.sin(theta)
         return theta_deriv, omega_deriv
 
     # Oppgave 2c)
@@ -28,9 +29,7 @@ class Pendulum:
         if angle == "deg": 
             angle = np.radians("deg")
 
-        solution = solve_ivp(
-            Pendulum(self.L, self.M, self.g), [0, T], [y0],
-            t_eval=np.linspace(0, T, T // dt)
-        )
-        self.solution_t, self.solution_y = solution.t, solution.y[0]
-        
+        sol = solve_ivp(self, (0, T), y0, max_step=dt)
+        print(sol.y)
+        self.__solution_t, self.__solution_y = sol.t, sol.y
+
