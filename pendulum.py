@@ -44,6 +44,22 @@ class Pendulum:
     def y(self):
         return -self.__L * np.cos(self.theta)
 
+    @property
+    def potential(self):
+        return self.__M * self.__g * (self.y + self.__L)
+
+    @property
+    def vx(self):
+        return np.gradient(self.x, self.t[1] - self.t[0])
+
+    @property
+    def vy(self):
+        return np.gradient(self.y, self.t[1] - self.t[0])
+
+    @property
+    def kinetic(self):
+        return (1/2) * self.__M * (self.vx**2 + self.vy**2)
+
     def __call__(self, t, y):
         """
         Tar inn parameterne t og y som brukes i to funksjoner og
@@ -68,5 +84,5 @@ class Pendulum:
 
 # just for basic test, need better test case
 pend = Pendulum()
-pend.solve((0, 0), 1, 0.1)
-print(pend.x)
+pend.solve((1, 2), 1, 0.1)
+print(pend.kinetic)
