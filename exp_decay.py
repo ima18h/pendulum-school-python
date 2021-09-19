@@ -3,29 +3,26 @@ from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
 
-class ExponentialDecay: 
-    def __init__(self, a): 
+class ExponentialDecay:
+    def __init__(self, a):
         """Tar inn en konstant a som kun kan være positiv."""
         self.a = a
-        if a < 0: 
+        if a < 0:
             raise ValueError("The constant a cannot be negative")
 
-    def __call__(self, t, u):   
+    def __call__(self, t, u):
         """
         Tar inn parameterne t og u i en funksjon f(t, u) og
         returnerer den deriverte (h.s. av ODE-systemet).
         """
-        du_dt = -self.a*u
-        return du_dt            
+        du_dt = -self.a * u
+        return du_dt
 
-# Oppgave 1c)
+    # Oppgave 1c)
     def solve(self, u0, T, dt):
         """ Beregner løsninger av ODE-systemet for 0 <= t <= T """
-        solution = solve_ivp(
-            self, (0, T), (u0,),
-            max_step=dt
-        )
-        return solution.t, solution.y[0]
+        sol = solve_ivp(self, (0, T), (u0,), max_step=dt)
+        return sol.t, sol.y[0]
 
 
 # Tester solve metoden
