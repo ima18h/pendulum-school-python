@@ -22,7 +22,7 @@ class ExponentialDecay:
     def solve(self, u0, T, dt):
         """ Beregner løsninger av ODE-systemet for 0 <= t <= T """
         solution = solve_ivp(
-            self, [0, T], [u0],
+            self, (0, T), (u0,),
             max_step=dt
         )
         return solution.t, solution.y[0]
