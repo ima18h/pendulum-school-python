@@ -8,7 +8,8 @@ class Pendulum:
         Tar inn parameterne L, M og g. Om noe annet ikke er gitt så er 
         L = 1 m, M = 1 kg og g = 9.81 m/s^2 som standardverdi.
         """
-        self.__solution_t, self.__solution_y = None, None
+        self.__t = None
+        self._theta, self._omega = None, None
         self.__L = L
         self.__M = M
         self.__g = g
@@ -30,6 +31,10 @@ class Pendulum:
             angle = np.radians("deg")
 
         sol = solve_ivp(self, (0, T), y0, max_step=dt)
-        print(sol.y)
-        self.__solution_t, self.__solution_y = sol.t, sol.y
+        self.__t = sol.t
+        self._theta, self._omega = sol.y[0], sol.y[1]
 
+
+# just for basic test, need better test case
+pend = Pendulum()
+pend.solve((0, 0), 1, 0.1)
