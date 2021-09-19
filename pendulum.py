@@ -2,8 +2,9 @@ import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
+
 # Oppgave 2a)
-class Pendulum: 
+class Pendulum:
     def __init__(self, L=1, M=1, g=9.81):
         """
         Tar inn parameterne L, M og g. Om noe annet ikke er gitt så er 
@@ -62,7 +63,7 @@ class Pendulum:
     # virker som periodene stemmer, men størrelsen på kinetic og potential er rar.
     @property
     def kinetic(self):
-        return (1/2) * self.__M * (self.vx**2 + self.vy**2)
+        return (1 / 2) * self.__M * (self.vx ** 2 + self.vy ** 2)
 
     def __call__(self, t, y):
         """
@@ -71,13 +72,13 @@ class Pendulum:
         """
         theta, omega = y
         theta_deriv = omega
-        omega_deriv = -self.__g / self.__L*np.sin(theta)
+        omega_deriv = -self.__g / self.__L * np.sin(theta)
         return theta_deriv, omega_deriv
 
     # Oppgave 2c)
     def solve(self, y0, T, dt, angle="rad"):
         """ Beregner løsninger av ODE-systemet for 0 <= t <= T """
-        if angle == "deg": 
+        if angle == "deg":
             angle = np.radians("deg")
 
         sol = solve_ivp(self, (0, T), y0, max_step=dt)
@@ -86,10 +87,22 @@ class Pendulum:
         self.__solved = True
 
 
+class DampenedPendulum(Pendulum):
+    def __init__(self, B, L=1, M=1, g=9.81):
+        super().__init__(L, M, g)
+        self._B = B
+
+    def __call__(self, t, y):
+        theta, omega = y
+        theta_deriv = omega
+        omega_deriv = ((-self.__g / self.__L) * np.sin(theta)) - (self._B / self.__M) * omega
+        return theta_deriv, omega_deriv
+
+
 # just for basic test, need better test case
 # TODO: add titles and such to plots
-pend = Pendulum()
-pend.solve((np.pi/2, 1), 4, 0.1)
+pend = DampenedPendulum(11)
+pend.solve((np.pi / 2, 1), 4, 0.1)
 
 plt.plot(pend.t, pend.theta)
 
@@ -99,4 +112,4 @@ ax2.plot(pend.t, pend.potential, 'tab:orange')
 ax3.plot(pend.t, pend.theta, 'tab:green')
 ax4.plot(pend.t, pend.y, 'tab:red')
 plt.show()
-print(pend.potential+pend.kinetic)
+print(pend.potential + pend.kinetic)
