@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.integrate import solve_ivp
+from matplotlib import pyplot as plt
 
 
 class DoublePendulum:
@@ -33,7 +34,7 @@ class DoublePendulum:
         if angle == "deg":
             angle = np.radians("deg")
 
-        sol = solve_ivp(self, (0, T), y0, max_step=dt)
+        sol = solve_ivp(self, (0, T), y0, max_step=dt, method="Radau")
         self._t = sol.t
         self._theta1, self._omega1, self._theta2, self._omega2 = sol.y[0], sol.y[1], sol.y[2], sol.y[3]
 
@@ -95,3 +96,16 @@ class DoublePendulum:
         k2 = 1/2 * (self.vx2**2 + self.vy2**2)
         return k1 + k2
 
+
+# again something fucky. we just gotta ask for help. the tests pass so equations are right.
+# basic test
+pend = DoublePendulum()
+pend.solve((np.pi / 2, 1, np.pi / 2, 1), 4, 0.1)
+
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
+ax1.plot(pend.t, pend.kinetic)
+ax2.plot(pend.t, pend.potential, 'tab:orange')
+ax3.plot(pend.t, pend.theta1, 'tab:green')
+ax4.plot(pend.t, pend.kinetic + pend.potential, 'tab:red')
+plt.show()
+print(pend.potential + pend.kinetic)
