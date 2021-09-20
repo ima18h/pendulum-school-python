@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.integrate import solve_ivp
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
 
 
 class DoublePendulum:
@@ -9,24 +9,28 @@ class DoublePendulum:
         self._L2 = L2
         self._g = g
         self._t = None
-        self._theta1, self._omega1, self._theta2, self._omega2 = None, None, None, None
+        self._theta1, self._omega1 = None, None
+        self._theta2, self._omega2 = None, None
 
     def __call__(self, t, y):
         theta1, omega1, theta2, omega2 = y
         dtheta1 = omega1
         dtheta2 = omega2
         delta_t = theta2 - theta1
-        domega1 = ((self._L1 * omega1 ** 2 * np.sin(delta_t) * np.cos(delta_t))
-                   + (self._g * np.sin(theta2) * np.cos(delta_t))
-                   + (self._L2 * omega2 ** 2 * np.sin(delta_t))
-                   - (2 * self._g * np.sin(theta1))) / ((2 * self._L1)
-                                                        - (self._L1 * np.cos(delta_t) ** 2))
+        domega1 = (
+            (self._L1 * omega1 ** 2 * np.sin(delta_t) * np.cos(delta_t))
+            + (self._g * np.sin(theta2) * np.cos(delta_t))
+            + (self._L2 * omega2 ** 2 * np.sin(delta_t))
+            - (2 * self._g * np.sin(theta1))
+        ) / ((2 * self._L1) - (self._L1 * np.cos(delta_t) ** 2))
 
-        domega2 = (-(self._L2 * omega2 ** 2 * np.sin(delta_t) * np.cos(delta_t))
-                   + (2 * self._g * np.sin(theta1) * np.cos(delta_t))
-                   - (2 * self._L1 * omega1 ** 2 * np.sin(delta_t))
-                   - (2 * self._g * np.sin(theta2))) / ((2 * self._L2)
-                                                        - (self._L2 * np.cos(delta_t) ** 2))
+        domega2 = (
+            -(self._L2 * omega2 ** 2 * np.sin(delta_t) * np.cos(delta_t))
+            + (2 * self._g * np.sin(theta1) * np.cos(delta_t))
+            - (2 * self._L1 * omega1 ** 2 * np.sin(delta_t))
+            - (2 * self._g * np.sin(theta2))
+        ) / ((2 * self._L2) - (self._L2 * np.cos(delta_t) ** 2))
+
         return dtheta1, domega1, dtheta2, domega2
 
     def solve(self, y0, T, dt, angle="rad"):
@@ -36,7 +40,8 @@ class DoublePendulum:
 
         sol = solve_ivp(self, (0, T), y0, max_step=dt, method="Radau")
         self._t = sol.t
-        self._theta1, self._omega1, self._theta2, self._omega2 = sol.y[0], sol.y[1], sol.y[2], sol.y[3]
+        self._theta1, self._omega1 = sol.y[0], sol.y[1]
+        self._theta2, self._omega2 = sol.y[2], sol.y[3]
 
     @property
     def t(self):
