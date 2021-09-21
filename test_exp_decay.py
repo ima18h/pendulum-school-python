@@ -8,10 +8,11 @@ def test_ExponentialDecay():
     t = 1 # Kan velges fritt, endrer ikke svaret til den deriverte
     u_t = 3.2
     a = 0.4
-    e = ExponentialDecay(a)
+    exp_decay = ExponentialDecay(a)
     expected = -1.28
     tol = 1e-14
-    assert abs(e(t, u_t) - expected) < tol
+    assert abs(exp_decay(t, u_t) - expected) < tol
+    assert exp_decay(0, 0.728) == exp_decay(2, 0.728)
 
 def test_is_a_negative_raise_ValueError():
     with pytest.raises(ValueError):
@@ -20,8 +21,7 @@ def test_is_a_negative_raise_ValueError():
 
 
 # Oppgave 1d)
-# TODO: fix tests for 1d
-# keep it simple. check edge cases and get times from the solution. it returns time list
+# TO DO: fix last test for 1d)
 @pytest.mark.parametrize(
     "a, u0, T", [(2, 3, 4), (0.2, 6, 10), (1, 5, 20)]
 )
