@@ -38,17 +38,11 @@ def test_initial_condition_zero_gives_arrays_zero():
     dt = 1
     pendulum = Pendulum()
     pendulum.solve((0, 0), T, dt)
+
     expected_theta = np.zeros_like(pendulum.theta)
     expected_omega = np.zeros_like(pendulum.omega)
-
-    print(pendulum.t)
+    expected_t_values = [i * dt for i in range(T+dt)]
 
     assert np.all(pendulum.theta == expected_theta)
     assert np.all(pendulum.omega == expected_omega)
-    
-    # Denne delen av testen funker ikke. Spør om hjelp! 
-    """
-    for i in range(0, T, dt):
-        expected_t_values = i*dt
-        assert np.all(pendulum.t == expected_t_values)
-    """
+    assert np.all(abs(pendulum.t - expected_t_values) - TOL)
