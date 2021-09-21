@@ -80,7 +80,6 @@ class Pendulum:
             angle = np.radians("deg")
 
         sol = solve_ivp(self, [0, T], y0, t_eval=np.linspace(0, T, int(T/dt)+1))
-        #sol = solve_ivp(self, [0, T], y0, max_step=dt)
         self._t = sol.t
         self._theta, self._omega = sol.y[0], sol.y[1]
         self._solved = True
@@ -94,7 +93,9 @@ class DampenedPendulum(Pendulum):
     def __call__(self, t, y):
         theta, omega = y
         theta_deriv = omega
-        omega_deriv = ((-self.g / self.L) * np.sin(theta)) - (self._B / self.M) * omega
+        omega_deriv = (
+            (-self.g / self.L) * np.sin(theta)
+        ) - (self._B / self.M) * omega
         return theta_deriv, omega_deriv
 
 
