@@ -21,7 +21,7 @@ class ExponentialDecay:
     # Oppgave 1c)
     def solve(self, u0, T, dt):
         """ Beregner løsninger av ODE-systemet for 0 <= t <= T """
-        sol = solve_ivp(self, (0, T), (u0,), max_step=dt)
+        sol = solve_ivp(self, (0, T), (u0,), t_eval=np.linspace(0, T, int(T/dt)+1))
         return sol.t, sol.y[0]
 
 
