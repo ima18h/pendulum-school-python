@@ -38,7 +38,8 @@ class DoublePendulum:
         if angle == "deg":
             angle = np.radians("deg")
 
-        sol = solve_ivp(self, (0, T), y0, max_step=dt, method="Radau")
+        sol = solve_ivp(self, (0, T), y0,
+                        t_eval=np.linspace(0, T, int(T/dt)+1), method="Radau")
         self._t = sol.t
         self._theta1, self._omega1 = sol.y[0], sol.y[1]
         self._theta2, self._omega2 = sol.y[2], sol.y[3]
