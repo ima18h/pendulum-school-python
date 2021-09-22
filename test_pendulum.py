@@ -30,7 +30,7 @@ def test_calling_private_attributes_raises_AssertionError():
     with pytest.raises(AssertionError):
         pendulum.t, pendulum.theta, pendulum.omega
     
-    pendulum.solve()
+    pendulum.solve([np.pi/6, 0.15], 10, 1)
     pendulum.t, pendulum.theta, pendulum.omega
 
 def test_initial_condition_zero_gives_arrays_zero():
@@ -45,4 +45,4 @@ def test_initial_condition_zero_gives_arrays_zero():
 
     assert np.all(pendulum.theta == expected_theta)
     assert np.all(pendulum.omega == expected_omega)
-    assert np.all(abs(pendulum.t - expected_t_values) - TOL)
+    assert np.all(abs(pendulum.t - expected_t_values) < TOL)
