@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.lib.function_base import kaiser
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
@@ -85,8 +86,7 @@ class Pendulum:
         if angle == "deg":
             y0[0] = np.radians(y0[0])
 
-        sol = solve_ivp(self, (0, T), y0,
-                        t_eval=np.linspace(0, T, int(T/dt)+1))
+        sol = solve_ivp(self, (0, T), y0, t_eval=np.linspace(0, T, int(T/dt)+1))
         self._t = sol.t
         self._theta, self._omega = sol.y[0], sol.y[1]
         self._solved = True
@@ -106,17 +106,14 @@ class DampenedPendulum(Pendulum):
         return theta_deriv, omega_deriv
 
 
-# just for basic test, need better test case
-# TO DO: add titles and such to plots
-pend = DampenedPendulum(0.25)
-pend.solve((np.pi / 3, 0), 4, 0.001)
+if __name__ == '__main__': 
+    pend = Pendulum()
+    pend.solve((np.pi / 3, 0), 10, 0.001)
 
-plt.plot(pend.t, pend.theta)
-
-fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
-ax1.plot(pend.t, pend.kinetic + pend.potential)
-ax2.plot(pend.t, pend.potential, 'tab:orange')
-ax3.plot(pend.t, pend.theta, 'tab:green')
-ax4.plot(pend.t, pend.y, 'tab:red')
-plt.show()
-print(pend.potential + pend.kinetic)
+    plt.plot(pend.t, pend.kinetic + pend.potential, label="kinetic + potential")
+    plt.plot(pend.t, pend.potential, label="potential energy")
+    plt.plot(pend.t, pend.kinetic, label="kinetic energy")
+    plt.plot(pend.t, pend.theta, label=r"$\theta$-values")
+    plt.legend()
+    plt.title("Graphs of energy conservation")
+    plt.show()
