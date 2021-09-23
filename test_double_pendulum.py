@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from double_pendulum import DoublePendulum
+from double_pendulum import DoublePendulum, ODEsNotSolve
 
 # Oppgave 3b)
 @pytest.mark.parametrize(
@@ -40,27 +40,45 @@ def test_domega2_dt(theta1, theta2, expected):
 
 
 # Oppgave 3f)
-# Need more work for these tests? What to tests? 
-# Is it even possible to test solve since it doesn't return anything!
-@pytest.mark.parametrize(
-    "theta, omega, T, dt", 
-    [
-        (np.pi/2, 0.15, 5, 1), 
-        (np.pi/3, 0.5, 10, 0.02), 
-        (np.pi/6, 1, 20, 2)
-    ]
-)
-def test_DoublePendulum_solve_timesteps(y0, T, dt):
-    t = np.linspace(0, T, int(T/dt)+1)
-    y = DoublePendulum().solve(y0, T, dt)
-    tol = 1e-14
-    assert np.all(abs(y[0]-t) < tol) 
+TOL = 1e-14
 
-def test_properties_raise_AssertionError_before_solve():
-    double_pendulum = DoublePendulum()
-    with pytest.raises(AssertionError):
-        double_pendulum.t, double_pendulum.theta1, double_pendulum.theta2, 
-        double_pendulum.omega1, double_pendulum.omega2 
+def test_DoublePendulum_at_rest():
+    y = (0, 0, 0, 0)
+    expected_theta1_deriv = 0
+    expected_theta2_deriv = 0
+    expected_omega1_deriv = 0
+    expected_omega2_deriv = 0
+    double_pend = DoublePendulum()
+    theta1_deriv, omega1_deriv, theta2_deriv, omega2_deriv = double_pend(0, y)
+    assert abs(theta1_deriv-expected_theta1_deriv) < TOL
+    assert abs(theta2_deriv-expected_theta2_deriv) < TOL
+    assert abs(omega1_deriv-expected_omega1_deriv) < TOL
+    assert abs(omega2_deriv-expected_omega2_deriv) < TOL
 
-def test_kinetic_and_potential_is_constant():
-    pass
+def test_calling_private_attributes_raises_ODEsNotSolveError():
+    double_pend = DoublePendulum()
+    with pytest.raises(ODEsNotSolve):
+        double_pend.t, double_pend.theta1, double_pend.theta2, 
+        double_pend.omega1, double_pend.omega2
+    
+    double_pend.solve([np.pi/6, 0.15, np.pi/3, 0.15], 10, 1)
+    double_pend.t, double_pend.theta1, double_pend.theta2, double_pend.omega1, 
+    double_pend.omega2
+
+def test_initial_condition_zero_gives_arrays_zero():
+    T = 10
+    dt = 1
+    double_pend = DoublePendulum()
+    double_pend.solve((0, 0, 0, 0), T, dt)
+
+    expected_theta1 = np.zeros_like(double_pend.theta1)
+    expected_theta2 = np.zeros_like(double_pend.theta2)
+    expected_omega1 = np.zeros_like(double_pend.omega1)
+    expected_omega2 = np.zeros_like(double_pend.omega2)
+    expected_t_values = [i * dt for i in range(T+dt)]
+
+    assert np.all(double_pend.theta1 == expected_theta1)
+    assert np.all(double_pend.theta2 == expected_theta2)
+    assert np.all(double_pend.omega1 == expected_omega1)
+    assert np.all(double_pend.omega2 == expected_omega2)
+    assert np.all(abs(double_pend.t - expected_t_values) < TOL)
