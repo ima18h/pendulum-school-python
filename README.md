@@ -23,4 +23,3 @@ Project 1 for anece and imadha about Double Pendulum
     ulik Pendulum plottet.Har gått gjennom koden hundrevis av ganger og prøvd 
     å se om vi har oversett noe i implementeringen av metodene, men vi finner 
     ikke noe veldig åpenlyst. 
-
