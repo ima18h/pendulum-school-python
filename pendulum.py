@@ -108,6 +108,7 @@ class DampenedPendulum(Pendulum):
 
 if __name__ == '__main__': 
     pend = Pendulum()
+    #damp_pend = DampenedPendulum()
     pend.solve((np.pi / 3, 0), 10, 0.001)
 
     plt.plot(pend.t, pend.kinetic + pend.potential, label="kinetic + potential")
