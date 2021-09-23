@@ -56,23 +56,11 @@ def test_DoublePendulum_solve_timesteps(y0, T, dt):
     tol = 1e-14
     assert np.all(abs(y[0]-t) < tol) 
 
-@pytest.mark.parametrize(
-    "theta, omega, T, dt", 
-    [
-        (np.pi/2, 0.15, 5, 1), 
-        (np.pi/3, 0.5, 10, 0.02), 
-        (np.pi/6, 1, 20, 2)
-    ]
-)
-def test_DoublePendulum_solve_solutions(y0, T, dt):
-    y = DoublePendulum().solve(y0, T, dt)
-    expected = 1
-    tol = 1e-14
-    assert np.all(abs(y[1]-expected) < tol)
-    assert np.all(abs()) 
-
 def test_properties_raise_AssertionError_before_solve():
     double_pendulum = DoublePendulum()
     with pytest.raises(AssertionError):
         double_pendulum.t, double_pendulum.theta1, double_pendulum.theta2, 
         double_pendulum.omega1, double_pendulum.omega2 
+
+def test_kinetic_and_potential_is_constant():
+    pass
