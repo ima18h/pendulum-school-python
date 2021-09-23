@@ -108,12 +108,12 @@ class DampenedPendulum(Pendulum):
 
 if __name__ == '__main__': 
     pend = Pendulum()
-    #damp_pend = DampenedPendulum()
-    pend.solve((np.pi / 3, 0), 10, 0.001)
+    #pend = DampenedPendulum(0.25)
+    pend.solve((3 * np.pi / 7, 0), 10, 0.01)
 
-    plt.plot(pend.t, pend.kinetic + pend.potential, label="kinetic + potential")
-    plt.plot(pend.t, pend.potential, label="potential energy")
-    plt.plot(pend.t, pend.kinetic, label="kinetic energy")
+    plt.plot(pend.t, pend.kinetic + pend.potential, label="Total energy")
+    plt.plot(pend.t, pend.potential, label="Potential energy")
+    plt.plot(pend.t, pend.kinetic, label="Kinetic energy")
     plt.plot(pend.t, pend.theta, label=r"$\theta$-values")
     plt.legend()
     plt.title("Graphs of energy conservation")
