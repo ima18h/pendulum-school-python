@@ -103,16 +103,13 @@ class DoublePendulum:
         k2 = 1/2 * (self.vx2**2 + self.vy2**2)
         return k1 + k2
 
+if __name__ == '__main__': 
+    pend = DoublePendulum()
+    pend.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 30, 0.01)
 
-# again something fucky. we just gotta ask for help. the tests pass so equations are right.
-# basic test
-pend = DoublePendulum()
-pend.solve((np.pi / 2, 1, np.pi / 2, 1), 4, 0.1)
-
-fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
-ax1.plot(pend.t, pend.kinetic)
-ax2.plot(pend.t, pend.potential, 'tab:orange')
-ax3.plot(pend.t, pend.theta1, 'tab:green')
-ax4.plot(pend.t, pend.kinetic + pend.potential, 'tab:red')
-plt.show()
-print(pend.potential + pend.kinetic)
+    plt.plot(pend.t, pend.potential, label="potential energy")
+    plt.plot(pend.t, pend.kinetic, label="kinetic energy")
+    plt.plot(pend.t, pend.kinetic + pend.potential, label="kinetic + potential")
+    plt.legend()
+    plt.title("Graphs of energy conservation")
+    plt.show()
