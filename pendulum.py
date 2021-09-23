@@ -20,21 +20,27 @@ class Pendulum:
         if self._solved:
             return self._t
         else:
-            raise AssertionError("Not solved yet.")
+            raise AssertionError(
+                "No solution found. Did you remember to call solve?"
+            )
 
     @property
     def theta(self):
         if self._solved:
             return self._theta
         else:
-            raise AssertionError("Not solved yet.")
+            raise AssertionError(
+                "No solution found. Did you remember to call solve?"
+            )
 
     @property
     def omega(self):
         if self._solved:
             return self._omega
         else:
-            raise AssertionError("Not solved yet.")
+            raise AssertionError(
+                "No solution found. Did you remember to call solve?"
+            )
 
     @property
     def x(self):
