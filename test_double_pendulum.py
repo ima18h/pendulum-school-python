@@ -43,7 +43,12 @@ def test_domega2_dt(theta1, theta2, expected):
 # Need more work for these tests? What to tests? 
 # Is it even possible to test solve since it doesn't return anything!
 @pytest.mark.parametrize(
-    "y0, T, dt", [(3, 2, 1), (0.2, 6, 10), (1, 5, 20)]
+    "theta, omega, T, dt", 
+    [
+        (np.pi/2, 0.15, 5, 1), 
+        (np.pi/3, 0.5, 10, 0.02), 
+        (np.pi/6, 1, 20, 2)
+    ]
 )
 def test_DoublePendulum_solve_timesteps(y0, T, dt):
     t = np.linspace(0, T, int(T/dt)+1)
@@ -52,16 +57,22 @@ def test_DoublePendulum_solve_timesteps(y0, T, dt):
     assert np.all(abs(y[0]-t) < tol) 
 
 @pytest.mark.parametrize(
-    "y0, T, dt", [(3, 2, 1), (0.2, 6, 10), (1, 5, 20)]
+    "theta, omega, T, dt", 
+    [
+        (np.pi/2, 0.15, 5, 1), 
+        (np.pi/3, 0.5, 10, 0.02), 
+        (np.pi/6, 1, 20, 2)
+    ]
 )
 def test_DoublePendulum_solve_solutions(y0, T, dt):
     y = DoublePendulum().solve(y0, T, dt)
     expected = 1
     tol = 1e-14
-    assert np.all(abs(y[1]-expected) < tol) 
+    assert np.all(abs(y[1]-expected) < tol)
+    assert np.all(abs()) 
 
-def test_DoublePendulum_potential_energy():
-    pass
-
-def test_DoublePendulum_kinetic_energy():
-    pass
+def test_properties_raise_AssertionError_before_solve():
+    double_pendulum = DoublePendulum()
+    with pytest.raises(AssertionError):
+        double_pendulum.t, double_pendulum.theta1, double_pendulum.theta2, 
+        double_pendulum.omega1, double_pendulum.omega2 
