@@ -83,7 +83,7 @@ class Pendulum:
     def solve(self, y0, T, dt, angle="rad"):
         """ Beregner løsninger av ODE-systemet for 0 <= t <= T """
         if angle == "deg":
-            angle = np.radians("deg")
+            y0[0] = np.radians(y0[0])
 
         sol = solve_ivp(self, (0, T), y0,
                         t_eval=np.linspace(0, T, int(T/dt)+1))
