@@ -56,11 +56,11 @@ class Pendulum:
 
     @property
     def vx(self):
-        return np.gradient(self.x)
+        return np.gradient(self.x, self.t)
 
     @property
     def vy(self):
-        return np.gradient(self.y)
+        return np.gradient(self.y, self.t)
 
     # TO DO: det er noe som feiler formlene.
     # kinetic er alt for lav, eller så er potential alt for høy.
@@ -108,13 +108,13 @@ class DampenedPendulum(Pendulum):
 
 # just for basic test, need better test case
 # TO DO: add titles and such to plots
-pend = DampenedPendulum(0.5)
-pend.solve((np.pi / 2, 1), 4, 0.1)
+pend = DampenedPendulum(0.25)
+pend.solve((np.pi / 3, 0), 4, 0.001)
 
 plt.plot(pend.t, pend.theta)
 
 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
-ax1.plot(pend.t, pend.kinetic * 100 + pend.potential)
+ax1.plot(pend.t, pend.kinetic + pend.potential)
 ax2.plot(pend.t, pend.potential, 'tab:orange')
 ax3.plot(pend.t, pend.theta, 'tab:green')
 ax4.plot(pend.t, pend.y, 'tab:red')
