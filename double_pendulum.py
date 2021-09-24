@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
+from matplotlib import animation
 
 class ODEsNotSolve(AssertionError):
     pass
@@ -133,7 +134,34 @@ class DoublePendulum:
         return k1 + k2
 
 
+# Oppgave 4a)
+    def create_animation(self):
+        # Create empty figure
+        fig = plt.figure()
+            
+        # Configure figure
+        plt.axis('equal')
+        plt.axis('off')
+        plt.axis((-3, 3, -3, 3))
+            
+        # Make an "empty" plot object to be updated throughout the animation
+        self.pendulums, = plt.plot([], [], 'o-', lw=2)
+            
+        # Call FuncAnimation
+        self.animation = animation.FuncAnimation(fig,
+                                                self._next_frame,
+                                                frames=range(len(self.x1)), 
+                                                repeat=None,
+                                                interval=60*self.dt, 
+                                                blit=True)
+
+    def _next_frame(self, i):
+        self.pendulums.set_data((0, self.x1[i], self.x2[i]),
+                                (0, self.y1[i], self.y2[i]))
+        return self.pendulums,
+
 if __name__ == '__main__': 
+    # plotter dobbel pendulum graf fra opppgave 3
     pend = DoublePendulum()
     pend.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 30, 0.01)
 
@@ -143,3 +171,10 @@ if __name__ == '__main__':
     plt.legend()
     plt.title("Graphs of energy conservation")
     plt.show()
+
+    """# Plotter animasjon fra oppgave 4
+    model = DoublePendulum()
+    model.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 30, 0.01)
+    model.create_animation()
+    plt.show()
+    """
