@@ -81,4 +81,6 @@ def test_initial_condition_zero_gives_arrays_zero():
     assert np.all(double_pend.theta2 == expected_theta2)
     assert np.all(double_pend.omega1 == expected_omega1)
     assert np.all(double_pend.omega2 == expected_omega2)
-    assert np.all(abs(double_pend.t - expected_t_values) < TOL)
+    assert np.all(double_pend.t >= 0)
+    assert double_pend.t[0] == 0
+    assert double_pend.t[-1] == T
