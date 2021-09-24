@@ -134,7 +134,7 @@ class DoublePendulum:
         k2 = 1/2 * (self.vx2**2 + self.vy2**2)
         return k1 + k2
 
-"""
+
 # Oppgave 4a)
     def create_animation(self):
         # Create empty figure
@@ -161,13 +161,8 @@ class DoublePendulum:
                                 (0, self.y1[i], self.y2[i]))
         return self.pendulums,
 
-model = DoublePendulum()
-model.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 30, 0.01)
-model.create_animation()
-plt.show()
-"""
-
 if __name__ == '__main__': 
+    # plotter dobbel pendulum graf fra opppgave 3
     pend = DoublePendulum()
     pend.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 30, 0.01)
 
@@ -177,3 +172,10 @@ if __name__ == '__main__':
     plt.legend()
     plt.title("Graphs of energy conservation")
     plt.show()
+
+    """# Plotter animasjon fra oppgave 4
+    model = DoublePendulum()
+    model.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 30, 0.01)
+    model.create_animation()
+    plt.show()
+    """
