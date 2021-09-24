@@ -29,3 +29,5 @@ Project 1 for anece and imadha about Double Pendulum
     som de skal, noe som det virker som de er som er litt merkelig. 
 
 - Oppgave 2 og 3 har blitt fikset nå. det ser greit ut. 
+- Brukte en annen, LSODA, som også ga bra resultat. 
+- Forskjellene var ikke så store mellom forskjellige metoder. 
