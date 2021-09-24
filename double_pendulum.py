@@ -40,6 +40,7 @@ class DoublePendulum:
 
 # Oppgave 3c)
     def solve(self, y0, T, dt, angle="rad"):
+        self.dt = dt
         """ Beregner løsninger av ODE-systemet for 0 <= t <= T """
         if angle == "deg":
             y0[0] = np.radians(y0[0])
@@ -152,7 +153,7 @@ class DoublePendulum:
                                                 self._next_frame,
                                                 frames=range(len(self.x1)), 
                                                 repeat=None,
-                                                interval=60*self.dt, 
+                                                interval=1000*self.dt, 
                                                 blit=True)
 
     def _next_frame(self, i):
@@ -160,10 +161,17 @@ class DoublePendulum:
                                 (0, self.y1[i], self.y2[i]))
         return self.pendulums,
 
+    def show_animation(self):
+        plt.show()
+
+    def save_animation(self, filename):
+        self.animation.save(filename, fps=60)
+
+
 if __name__ == '__main__': 
     # plotter dobbel pendulum graf fra opppgave 3
     pend = DoublePendulum()
-    pend.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 30, 0.01)
+    pend.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 10, 0.01)
 
     plt.plot(pend.t, pend.potential, label="potential energy")
     plt.plot(pend.t, pend.kinetic, label="kinetic energy")
@@ -172,9 +180,10 @@ if __name__ == '__main__':
     plt.title("Graphs of energy conservation")
     plt.show()
 
-    """# Plotter animasjon fra oppgave 4
+    # Plotter animasjon fra oppgave 4
     model = DoublePendulum()
-    model.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 30, 0.01)
+    model.solve((3 * np.pi / 7, 1, 3 * np.pi / 4, 1), 6, 0.01)
     model.create_animation()
-    plt.show()
-    """
+    plt.title("Animation of the double pendulum")
+    model.show_animation()
+    model.save_animation("example_simulation.mp4")
