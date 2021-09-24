@@ -39,5 +39,4 @@ def test_exp_decay_solve_solutions(a, u0, T):
     u = ExponentialDecay(a).solve(u0, T, dt)
     expected = u0*np.exp(-a*u[0])
     tol = 1e-14
-    print(expected[:5], u[1][:5])
     assert np.all(abs(u[1]-expected) < tol)
