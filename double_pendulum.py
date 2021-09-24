@@ -44,8 +44,7 @@ class DoublePendulum:
             y0[0] = np.radians(y0[0])
             y0[2] = np.radians(y0[2])
 
-        sol = solve_ivp(self, (0, T), y0,
-                        t_eval=np.linspace(0, T, int(T/dt)+1), method="Radau")
+        sol = solve_ivp(self, (0, T), y0, max_step=dt, method="LSODA")
         self._t = sol.t
         self._theta1, self._omega1 = sol.y[0], sol.y[1]
         self._theta2, self._omega2 = sol.y[2], sol.y[3]
@@ -111,19 +110,19 @@ class DoublePendulum:
 
     @property
     def vx1(self):
-        return np.gradient(self.x1)
+        return np.gradient(self.x1, self.t)
 
     @property
     def vy1(self):
-        return np.gradient(self.y1)
+        return np.gradient(self.y1, self.t)
 
     @property
     def vx2(self):
-        return np.gradient(self.x2)
+        return np.gradient(self.x2, self.t)
 
     @property
     def vy2(self):
-        return np.gradient(self.y2)
+        return np.gradient(self.y2, self.t)
 
 # Oppgave 3e)
     @property
