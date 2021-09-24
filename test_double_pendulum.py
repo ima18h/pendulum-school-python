@@ -75,7 +75,6 @@ def test_initial_condition_zero_gives_arrays_zero():
     expected_theta2 = np.zeros_like(double_pend.theta2)
     expected_omega1 = np.zeros_like(double_pend.omega1)
     expected_omega2 = np.zeros_like(double_pend.omega2)
-    expected_t_values = [i * dt for i in range(T+dt)]
 
     assert np.all(double_pend.theta1 == expected_theta1)
     assert np.all(double_pend.theta2 == expected_theta2)
