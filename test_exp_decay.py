@@ -21,7 +21,6 @@ def test_is_a_negative_raise_ValueError():
 
 
 # Oppgave 1d)
-# TO DO: fix last test for 1d)
 @pytest.mark.parametrize(
     "a, u0, T", [(2, 3, 4), (0.2, 6, 10), (1, 5, 20)]
 )
@@ -41,8 +40,6 @@ def test_exp_decay_solve_solutions(a, u0, T):
     expected = u0*np.exp(-a*u[0])
     tol = 1e-14
     print(expected[:5], u[1][:5])
-    # fun  = lambda t, u: -a*u
-    # expected = solve_ivp(fun, [0, T], [u0], t_eval = np.linspace(0, T, T//dt))
-    assert np.all(abs(u[1]-expected) < tol) # f"max diff: {np.max(abs(u[1]-expected.y[0]))}\nmin diff: {np.min(abs(u[1]-expected.y[0]))}\n{len((abs(u[1]-expected.y[0]) < tol) == False)}"
+    assert np.all(abs(u[1]-expected) < tol)
     
     
