@@ -26,7 +26,7 @@ def test_is_a_negative_raise_ValueError():
 )
 def test_exp_decay_solve_timesteps(a, u0, T):
     dt = 1 
-    t = np.linspace(0, T, int(T/dt)+1)
+    t = np.linspace(0, T, dt)
     u = ExponentialDecay(a).solve(u0, T, dt)
     tol = 1e-14
     assert np.all(abs(u[0]-t) < tol)
@@ -41,5 +41,3 @@ def test_exp_decay_solve_solutions(a, u0, T):
     tol = 1e-14
     print(expected[:5], u[1][:5])
     assert np.all(abs(u[1]-expected) < tol)
-    
-    
