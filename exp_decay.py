@@ -27,17 +27,18 @@ class ExponentialDecay:
 
 
 # Tester solve metoden
-a = 0.05
-u0_list = [2, 4, 8, 12]
-T = 100
-dt = 1
-for u0 in u0_list:
-    decay_model = ExponentialDecay(a)
-    t, u = decay_model.solve(u0, T, dt)
-    plt.plot(t, u, label=fr"$u_0$ = {u0}")
+if __name__ == '__main__':
+    a = 0.05
+    u0_list = [2, 4, 8, 12]
+    T = 100
+    dt = 1
+    for u0 in u0_list:
+        decay_model = ExponentialDecay(a)
+        t, u = decay_model.solve(u0, T, dt)
+        plt.plot(t, u, label=fr"$u_0$ = {u0}")
 
-plt.xlabel("x-akse")
-plt.ylabel("y-akse")
-plt.title(r"Løsning av ODE-systemet $ \frac{du}{dt} = -a \cdot u$")
-plt.legend()
-plt.show()
+    plt.xlabel("x-akse")
+    plt.ylabel("y-akse")
+    plt.title(r"Løsning av ODE-systemet $ \frac{du}{dt} = -a \cdot u$")
+    plt.legend()
+    plt.show()
