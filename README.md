@@ -23,3 +23,7 @@ Project 1 for anece and imadha about Double Pendulum
     ulik Pendulum plottet.Har gått gjennom koden hundrevis av ganger og prøvd 
     å se om vi har oversett noe i implementeringen av metodene, men vi finner 
     ikke noe veldig åpenlyst. 
+
+-   Plottet i oppgave 3e) ser heller ikke som vi tenker det skal gjøre. Har 
+    også her sett gjennom metodene kinetic og potential at de er implementert
+    som de skal, noe som det virker som de er som er litt merkelig. 
