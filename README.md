@@ -13,3 +13,6 @@ Project 1 for anece and imadha about Double Pendulum
     dukker opp, og vi har spurt 2 gruppelærere, uten at de vet hvorfor 
     dette skjer. Vi mener at implementeringen av testingen og metodene er 
     riktig, men kan hende det er noe vi har oversett som gjør at vi får feil. 
+
+- Brukte en annen, LSODA, som også ga bra resultat for oppgave 3. 
+- Forskjellene var ikke så store mellom metoder. 
