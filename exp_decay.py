@@ -20,14 +20,14 @@ class ExponentialDecay:
 
     # Oppgave 1c)
     def solve(self, u0, T, dt):
-        """ Beregner løsninger av ODE-systemet for 0 <= t <= T """
+        """Beregner løsninger av ODE-systemet for 0 <= t <= T"""
         sol = solve_ivp(self, (0, T), [u0],
                         t_eval=np.linspace(0, T, dt))
         return sol.t, sol.y[0]
 
 
-# Tester solve metoden
 if __name__ == '__main__':
+    """Tester solve metoden i en egen test-blokk, og plotter funksjonene."""
     a = 0.05
     u0_list = [2, 4, 8, 12]
     T = 100
