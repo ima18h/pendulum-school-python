@@ -11,14 +11,12 @@ def test_ExponentialDecay():
     exp_decay = ExponentialDecay(a)
     expected = -1.28
     tol = 1e-14
-    assert abs(exp_decay(t, u_t) - expected) < tol
+    assert abs(exp_decay(t, u_t)-expected) < tol
     assert exp_decay(0, 0.728) == exp_decay(2, 0.728)
 
 def test_is_a_negative_raise_ValueError():
     with pytest.raises(ValueError):
         ExponentialDecay(-5)
-
-
 
 # Oppgave 1d)
 @pytest.mark.parametrize(
@@ -37,6 +35,6 @@ def test_exp_decay_solve_timesteps(a, u0, T):
 def test_exp_decay_solve_solutions(a, u0, T):
     dt = 1 
     u = ExponentialDecay(a).solve(u0, T, dt)
-    expected = u0*np.exp(-a*u[0])
+    expected = u0 * np.exp(-a * u[0])
     tol = 1e-14
     assert np.all(abs(u[1]-expected) < tol)
