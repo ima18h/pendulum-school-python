@@ -45,4 +45,6 @@ def test_initial_condition_zero_gives_arrays_zero():
 
     assert np.all(pendulum.theta == expected_theta)
     assert np.all(pendulum.omega == expected_omega)
-    assert np.all(abs(pendulum.t - expected_t_values) < TOL)
+    assert np.all(pendulum.t >= 0)
+    assert pendulum.t[0] == 0
+    assert pendulum.t[-1] == T
