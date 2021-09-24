@@ -41,7 +41,6 @@ def test_initial_condition_zero_gives_arrays_zero():
 
     expected_theta = np.zeros_like(pendulum.theta)
     expected_omega = np.zeros_like(pendulum.omega)
-    expected_t_values = [i * dt for i in range(T+dt)]
 
     assert np.all(pendulum.theta == expected_theta)
     assert np.all(pendulum.omega == expected_omega)
